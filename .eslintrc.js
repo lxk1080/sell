@@ -26,6 +26,8 @@ module.exports = {
     // 使eslint验证要有分号
     'semi': ['error', 'always'],
     // 忽略缩进设置（使用webstorm的默认格式化代码）
-    'indent': 0
+    'indent': 0,
+    'space-before-function-paren': 0,
+    'no-trailing-spaces': 0
   }
 }
