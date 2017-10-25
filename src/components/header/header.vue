@@ -209,7 +209,6 @@
         right 12px
         top 10px
         font-size 10px
-
     .background
       position absolute
       left 0
@@ -220,12 +219,13 @@
     // sticky footer
     .detail
       position fixed
+      z-index 100
       left 0
       top 0
-      z-index 100
       width 100%
       height 100%
       overflow auto
+      backdrop-filter blur(10px)
       background-color rgba(7, 17, 27, .8)
       transition all .5s
       &.fade-enter-active, &.fade-leave-active
