@@ -11,7 +11,7 @@
         {{desc.negative}}<span class="count">{{negatives.length}}</span>
       </span>
     </div>
-    <div class="switch" :class="{'active': onlyContent}" @click="toggleContent($event)">
+    <div class="switch" :class="{'active': myOnlyContent}" @click="toggleContent($event)">
       <span class="icon-check_circle"></span>
       <span class="text">只看有内容的评价</span>
     </div>
@@ -52,7 +52,8 @@
       },
       data() {
         return {
-          mySelectType: this.selectType
+          mySelectType: this.selectType,
+          myOnlyContent: this.onlyContent
         };
       },
       computed: {
@@ -79,8 +80,8 @@
           if (!event._constructed) {
             return;
           }
-          this.onlyContent = !this.onlyContent;
-          this.$emit('toggleContent', this.onlyContent);
+          this.myOnlyContent = !this.myOnlyContent;
+          this.$emit('toggleContent', this.myOnlyContent);
         }
       }
   };
