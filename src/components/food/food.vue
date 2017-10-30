@@ -16,13 +16,24 @@
             <span class="now">￥{{food.price}}</span><!--
          --><span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
           </div>
+          <div class="cartcontrol-wrapper">
+            <cartcontrol :food="food" @add="emit()"></cartcontrol>
+          </div>
+          <transition name="fade">
+            <div class="buy" v-show="!food.count || food.count===0" @click.stop="addFirst($event)">加入购物车</div>
+          </transition>
         </div>
-        <div class="cartcontrol-wrapper">
-          <cartcontrol :food="food" @add="emit"></cartcontrol>
+        <!--分隔线-->
+        <split v-show="food.info"></split>
+        <div class="info" v-show="food.info">
+          <h1 class="title">商品信息</h1>
+          <p class="text">{{food.info}}</p>
         </div>
-        <transition name="fade">
-          <div class="buy" v-show="!food.count || food.count===0" @click.stop="addFirst($event)">加入购物车</div>
-        </transition>
+        <split></split>
+        <div class="rating">
+          <h1 class="title">商品评价</h1>
+          <ratingselect :ratings="food.ratings" :select-type="selectType" :only-content="onlyContent" :desc="desc"></ratingselect>
+        </div>
       </div>
     </div>
   </transition>
@@ -32,6 +43,12 @@
   import BScroll from 'better-scroll';
   import Vue from 'vue';
   import cartcontrol from '../cartcontrol/cartcontrol.vue';
+  import split from '../split/split.vue';
+  import ratingselect from '../ratingselect/ratingselect.vue';
+
+  // const POSITIVE = 0;
+  // const NEGATIVE = 1;
+  const ALL = 2;
 
   export default {
     props: {
@@ -41,12 +58,22 @@
     },
     data() {
       return {
-        showFlag: false
+        showFlag: false,
+        selectType: ALL,
+        onlyContent: true,
+        desc: {
+          all: '全部',
+          positive: '推荐',
+          negative: '吐槽'
+        }
       };
     },
     methods: {
       show() {
         this.showFlag = true;
+        // 在点击其他的食物详情时能够初始化
+        this.selectType = ALL;
+        this.onlyContent = true;
         // 一定要在dom重新渲染完毕后
         this.$nextTick(() => {
           if (!this.scroll) {
@@ -73,7 +100,9 @@
       }
     },
     components: {
-      cartcontrol
+      cartcontrol,
+      split,
+      ratingselect
     }
   };
 </script>
@@ -90,10 +119,8 @@
     &.move-enter-active, &.move-leave-active
       transition all 0.5s
       transform translate3d(0, 0, 0)
-    &.move-enter
-      transform translate3d(0, -100%, 0)
-    &.move-leave-to
-      transform translate3d(100%, 0, 0)
+    &.move-enter, &.move-leave-to
+      transform translate3d(-100%, 0, 0)
     .image-header
       position relative
       width 100%
@@ -107,12 +134,13 @@
         height 100%
       .back
         position absolute
-        left 20px
+        left 10px
         top 20px
         padding 10px
         font-size 20px
         color #fff
     .content
+      position relative
       padding 18px
       .title
         line-height 14px
@@ -141,25 +169,44 @@
           text-decoration line-through
           font-size 10px
           color rgb(147, 153, 159)
-    .cartcontrol-wrapper
-      position absolute
-      right 12px
-      bottom 12px
-    .buy
-      position absolute
-      z-index 10
-      right 18px
-      bottom 18px
-      line-height 24px
-      padding 0 12px
-      box-sizing border-box
-      font-size 10px
-      border-radius 12px
-      color #fff
-      background rgb(0, 160, 220)
-      &.fade-enter-active, &.fade-leave-active
-        transition all 0.5s
-        opacity 1
-      &.fade-enter, &.fade-leave-to
-        opacity 0
+      .cartcontrol-wrapper
+        position absolute
+        right 12px
+        bottom 12px
+      .buy
+        position absolute
+        z-index 10
+        right 18px
+        bottom 18px
+        line-height 24px
+        padding 0 12px
+        box-sizing border-box
+        font-size 10px
+        border-radius 12px
+        color #fff
+        background rgb(0, 160, 220)
+        &.fade-enter-active, &.fade-leave-active
+          transition all 0.5s
+          opacity 1
+        &.fade-enter, &.fade-leave-to
+          opacity 0
+    .info
+      padding 18px
+      .title
+        line-height 14px
+        margin-bottom 10px
+        font-size 14px
+        color rgb(7, 17, 27)
+      .text
+        line-height 24px
+        padding 0 8px
+        font-size 12px
+        color rgb(77, 85, 93)
+    .rating
+      padding-top 18px
+      .title
+        line-height 14px
+        margin-left 18px
+        font-size 14px
+        color rgb(7, 17, 27)
 </style>
