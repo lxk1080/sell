@@ -18,23 +18,29 @@
 
 <script type="text/ecmascript-6">
   import header from './components/header/header.vue';
+  import {urlParse} from 'common/js/Util';
 
   const ERR_OK = 0;
 
   export default {
     data() {
       return {
-        seller: {}
+        seller: {
+          id: (() => {
+            let queryParam = urlParse();
+            return queryParam.id;
+          })()
+        }
       };
     },
     created() {
-        this.$http.get('/api/seller').then((response) => {
-          response = response.body;
-          if (response.errno === ERR_OK) {
-            this.seller = response.data;
-            // console.log(this.seller);
-          }
-        });
+      this.$http.get('/api/seller?id=' + this.seller.id).then((response) => {
+        response = response.body;
+        if (response.errno === ERR_OK) {
+          // 从一个或多个源对象复制属性到目标对象，并返回目标对象 （给对象扩展属性）
+          this.seller = Object.assign({}, this.seller, response.data); // 第一个参数为目标对象
+        }
+      });
     },
     components: {
       'v-header': header
