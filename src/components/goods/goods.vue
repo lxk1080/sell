@@ -15,7 +15,7 @@
       <div class="foods-wrapper" ref="foodWrapper">
         <ul>
           <li v-for="item in goods" class="food-list food-list-hook">
-            <h1 class="title">{{item.name}}</h1>
+            <h1 class="title border-1px">{{item.name}}</h1>
             <ul>
               <li v-for="food in item.foods" class="food-item border-1px" @click="setCurrentFood(food, $event)">
                 <div class="icon">
@@ -200,10 +200,10 @@
           border-1px(rgba(7, 17, 27, .1));
           .icon
             display inline-block
+            margin-right 2px
             vertical-align top
             width 12px
             height 12px
-            margin-right 2px
             background-size 12px 12px
             background-repeat no-repeat
             &.decrease
@@ -219,17 +219,18 @@
     .foods-wrapper
       flex 1
       .title
-        padding-left 14px
+        margin-left 14px
+        margin-right 14px
         height 26px
         line-height 26px
-        border-left 2px solid #d9dde1
+        border-1px(rgba(7, 17, 27, .1))
         font-size 12px
+        font-weight 700
         color rgb(147, 153, 159)
-        background #f3f5f7
       .food-item
         display flex
-        margin 18px
-        padding-bottom 18px
+        margin 10px
+        padding-bottom 10px
         border-1px(rgba(7, 17, 27, .1))
         &:last-child
           margin-bottom 0
@@ -237,6 +238,8 @@
         .icon
           flex 0 0 57px
           margin-right 10px
+          img
+            border-radius 2px
         .content
           flex 1
           .name

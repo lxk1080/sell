@@ -225,8 +225,7 @@
       width 100%
       height 100%
       overflow auto
-      backdrop-filter blur(10px)
-      background-color rgba(7, 17, 27, .8)
+      background-color rgba(7, 17, 27, .9)
       transition all .5s
       &.fade-enter-active, &.fade-leave-active
         opacity 1
@@ -298,10 +297,10 @@
       .detail-close
         position relative
         margin -64px auto 0 auto
+        padding 2px
         clear both
         width 32px
         height 32px
         font-size 32px
-        color rgba(0, 0, 0, .5)
-
+        color rgba(255, 255, 255, .5)
 </style>
