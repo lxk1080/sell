@@ -49,11 +49,10 @@ app.use('/api', apiRoutes);
 
 app.use(express.static('./dist'));
 
-module.exports = app.listen(port, function (res) {
-  console.log(res);
-  /* if (err) {
+module.exports = app.listen(port, function (err) {
+  if (err) {
     console.log(err);
     return;
-  } */
+  }
   console.log('listening at http://127.0.0.1:' + port + ' ...');
 });
