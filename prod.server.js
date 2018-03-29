@@ -54,5 +54,5 @@ module.exports = app.listen(port, function (err) {
     console.log(err);
     return;
   }
-  console.log('listening at http://127.0.0.1:' + port + ' ...');
+  console.log('listening at http://127.0.0.1:' + port + ' .....');
 });
